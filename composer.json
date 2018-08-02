@@ -16,7 +16,11 @@
         "zendframework/zend-component-installer": "^1.0 || ^0.7 || ^1.0.0-dev@dev",
         "zendframework/zend-mvc": "^3.0.1",
         "zfcampus/zf-development-mode": "^3.0",
-        "zendframework/zend-json": "^3.1"
+        "zendframework/zend-json": "^3.1",
+        "zendframework/zend-dom": "^2.7",
+        "doctrine/doctrine-orm-module": "^2.1",
+        "zendframework/zend-developer-tools": "^1.2",
+        "zendframework/zend-hydrator": "^2.4"
     },
     "autoload": {
         "psr-4": {
