@@ -20,7 +20,10 @@
         "zendframework/zend-dom": "^2.7",
         "doctrine/doctrine-orm-module": "^2.1",
         "zendframework/zend-developer-tools": "^1.2",
-        "zendframework/zend-hydrator": "^2.4"
+        "zendframework/zend-hydrator": "^2.4",
+        "zendframework/zend-log": "^2.10",
+        "zendframework/zend-http": "^2.8",
+        "zendframework/zend-uri": "^2.6"
     },
     "autoload": {
         "psr-4": {
@@ -44,5 +47,8 @@
         ],
         "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
         "test": "phpunit"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
     }
 }
