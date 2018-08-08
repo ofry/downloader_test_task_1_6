@@ -12,6 +12,39 @@ use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
+    'log'             => [
+        'MyLogger' => [
+            'writers'    => [
+                'syslog' => [
+                    'name'     => 'syslog',
+                    'priority' => \Zend\Log\Logger::ALERT,
+                    'options'  => [
+                        'formatter' => [
+                            'name'    => \Zend\Log\Formatter\Simple::class,
+                            'options' => [
+                                'format'         => '%timestamp% %priorityName% (%priority%): %message% %extra%',
+                                'dateTimeFormat' => 'r',
+                            ],
+                        ],
+                        'filters'   => [
+                            'priority' => [
+                                'name'    => 'priority',
+                                'options' => [
+                                    'operator' => '<=',
+                                    'priority' => \Zend\Log\Logger::INFO,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'processors' => [
+                'backtrace' => [
+                    'name' => \Zend\Log\Processor\Backtrace::class,
+                ],
+            ],
+        ],
+    ],
     'router' => [
         'routes' => [
             'home' => [
