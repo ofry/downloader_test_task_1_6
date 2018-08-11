@@ -15,6 +15,6 @@
     {
         public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
         {
-            return $requestedName($container->get(WebPageFactory::class), $container->get(BaseFactory::class));
+            return new $requestedName($container->get(WebPageFactory::class), $container->get(BaseFactory::class));
         }
     }
