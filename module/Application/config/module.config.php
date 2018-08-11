@@ -8,6 +8,11 @@
 namespace Application;
 
 use Application\Controller\Plugin\Dates;
+use Application\Factory\BaseFactory;
+use Application\Factory\DownloaderFactory;
+use Application\Factory\WebPageFactory;
+use Application\Model\EventsTable;
+use Application\Model\WebPage;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -58,6 +63,16 @@ return [
                     ],
                 ],
             ],
+            'restful'     => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/api',
+                    'defaults' => [
+                        'controller' => Controller\DownloaderController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
             'application' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -73,6 +88,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\DownloaderController::class => DownloaderFactory::class
         ],
     ],
     'controller_plugins' => [
@@ -97,6 +113,19 @@ return [
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
+        ],
+    ],
+    'service_manager' => [
+        'abstract_factories' => [
+            \Zend\Log\LoggerAbstractServiceFactory::class,
+        ],
+        'factories'          => [
+            EventsTable::class => BaseFactory::class,
+            WebPage::class => WebPageFactory::class,
+        ],
+        'aliases'            => [
+            WebPageFactory::class => WebPage::class,
+            BaseFactory::class => EventsTable::class,
         ],
     ],
 ];
