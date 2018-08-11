@@ -35,6 +35,7 @@
         {
             $this->db = $db;
             $this->logger = $logger;
+            $this->hydrator = new ClassMethods();
             $this->init();
         }
 
@@ -49,6 +50,7 @@
             $classes = array(
                 $this->db->getClassMetadata(Event::class),
             );
+            $tool->dropSchema($classes);
             try {
                 $tool->createSchema($classes);
             }
@@ -71,6 +73,10 @@
             catch (\Throwable $e) {
                 $this->logger->emerg($e);
             }
+        }
 
+        public function get()
+        {
+            return $this->db->getRepository(Event::class)->findAll();
         }
     }

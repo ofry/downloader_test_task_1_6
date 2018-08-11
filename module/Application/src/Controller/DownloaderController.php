@@ -8,10 +8,13 @@
 
     namespace Application\Controller;
 
+    use Application\Model\Entity\Event;
     use Zend\Mvc\Controller\AbstractActionController;
     use Application\Model\WebPage;
     use Application\Model\EventsTable;
     use Zend\Dom\Query;
+    use Zend\Hydrator\ClassMethods;
+    use Zend\View\Model\JsonModel;
 
     class DownloaderController extends AbstractActionController
     {
@@ -21,10 +24,13 @@
 
         private $table;
 
+        private $hydrator;
+
         public function __construct(WebPage $page, EventsTable $table)
         {
             $this->page = $page;
             $this->table = $table;
+            $this->hydrator = new ClassMethods();
         }
 
         public function indexAction()
@@ -39,14 +45,24 @@
                 $event_date->rewind();
                 $event_link->rewind();
 
-                $entry = array();
-                $entry['date'] = $event_date->valid() ?
-                    trim($event_date->current()->textContent): '';
-                $entry['title'] = $event_link->valid() ?
+                $entryData = array();
+                $entryData['date'] = $event_date->valid() ?
+                    $this->dates()->createFromString(trim($event_date->current()->textContent), 'ru'): '';
+                $entryData['title'] = $event_link->valid() ?
                     trim($event_link->current()->textContent) : '';
-                $entry['url'] = $event_link->valid() ?
+                $entryData['url'] = $event_link->valid() ?
                     trim($event_link->current()->attributes->
                         getNamedItem('href')->nodeValue) : '';
+
+                $this->table->insert($entryData);
             }
+
+            //debug
+            $entries = $this->table->get();
+            $result = array();
+            foreach ($entries as $entry) {
+                $result[] = $this->hydrator->extract($entry);
+            }
+            return new JsonModel(array('response' => $result));
         }
     }

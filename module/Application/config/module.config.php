@@ -7,6 +7,7 @@
 
 namespace Application;
 
+use Application\Controller\Plugin\Dates;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -72,6 +73,14 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+        ],
+    ],
+    'controller_plugins' => [
+        'factories' => [
+            Dates::class => InvokableFactory::class,
+        ],
+        'aliases' => [
+            'dates' => Dates::class,
         ],
     ],
     'view_manager' => [
