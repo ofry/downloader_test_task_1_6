@@ -38,7 +38,8 @@
             $events = $dom->execute('tr.bizon_api_news_row');
             foreach ($events as $event)
             {
-                $event_html = new Query($event->textContent);
+                $event_html = new Query(simplexml_import_dom($event)->asXML());
+
                 $event_date = $event_html->execute('td.news_date');
                 $event_link = $event_html->execute('td > a');
                 $event_date->rewind();
