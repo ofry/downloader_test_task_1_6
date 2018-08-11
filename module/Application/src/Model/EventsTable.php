@@ -35,7 +35,6 @@
         {
             $this->db = $db;
             $this->logger = $logger;
-            $this->hydrator = new ClassMethods();
             $this->init();
         }
 

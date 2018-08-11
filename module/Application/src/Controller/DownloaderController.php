@@ -7,16 +7,15 @@
      */
 
     namespace Application\Controller;
-
-    use Application\Model\Entity\Event;
-    use Zend\Mvc\Controller\AbstractActionController;
+    
+    use Zend\Mvc\Controller\AbstractRestfulController;
     use Application\Model\WebPage;
     use Application\Model\EventsTable;
     use Zend\Dom\Query;
     use Zend\Hydrator\ClassMethods;
     use Zend\View\Model\JsonModel;
 
-    class DownloaderController extends AbstractActionController
+    class DownloaderController extends AbstractRestfulController
     {
         const URI = 'https://www.bills.ru/';
 
