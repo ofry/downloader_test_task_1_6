@@ -7,7 +7,7 @@
      */
 
     namespace Application\Controller;
-    
+
     use Zend\Mvc\Controller\AbstractRestfulController;
     use Application\Model\WebPage;
     use Application\Model\EventsTable;

@@ -47,7 +47,7 @@
         "post-create-project-cmd": [
             "@development-enable"
         ],
-        "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
+        "serve": "php -S 0.0.0.0:8080 -t public public/index.php --timeout=0",
         "test": "phpunit"
     },
     "require-dev": {

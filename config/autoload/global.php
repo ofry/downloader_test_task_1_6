@@ -36,7 +36,7 @@ return [
             'orm_default_static_php' => [
                 'class' => MappingDriver\StaticPHPDriver::class,
                 'paths' => [
-                    __DIR__ . '../../module/Application/src/Model/Entity',
+                    __DIR__ . '/../../module/Application/src/Model/Entity',
                 ],
             ],
             'orm_default_chain'      => [
