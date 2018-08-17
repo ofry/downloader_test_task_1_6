@@ -53,6 +53,7 @@
             );
             try {
                 $tool->updateSchema($classes);
+                $this->db->flush();
                 if (isDevMode()) {
                     $connection = $this->db->getConnection();
                     $platform = $connection->getDatabasePlatform();
