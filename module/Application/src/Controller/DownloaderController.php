@@ -8,10 +8,11 @@
 
     namespace Application\Controller;
 
+    use Zend\Dom\Document;
     use Zend\Mvc\Controller\AbstractRestfulController;
     use Application\Model\WebPage;
     use Application\Model\EventsTable;
-    use Zend\Dom\Query;
+    use Zend\Dom\Document\Query;
     use Zend\Hydrator\ClassMethods;
     use Zend\View\Model\JsonModel;
 
@@ -34,14 +35,21 @@
 
         public function indexAction()
         {
-            $dom = new Query($this->page->getDom(self::URI));
-            $events = $dom->execute('tr.bizon_api_news_row');
+            /**
+             * @var \Zend\Dom\Document
+             */
+            $document = $this->dom()->createFrom($this->page->getDom(self::URI));
+            $encoding = $document->getDomDocument()->encoding;
+            $events = Query::execute('tr.bizon_api_news_row', $document, Query::TYPE_CSS);
             foreach ($events as $event)
             {
-                $event_html = new Query(simplexml_import_dom($event)->asXML());
-
-                $event_date = $event_html->execute('td.news_date');
-                $event_link = $event_html->execute('td > a');
+//                $event_dom = new \DOMDocument();
+//                $event_dom->loadXML(simplexml_import_dom($event)->asXML());
+//                $event_dom->encoding = $encoding;
+//                $event_document = new Document($event_dom->saveXML());
+                $event_document = $this->dom()->createFrom($event, $encoding);
+                $event_date = Query::execute('td.news_date', $event_document, Query::TYPE_CSS);
+                $event_link = Query::execute('td > a', $event_document, Query::TYPE_CSS);
                 $event_date->rewind();
                 $event_link->rewind();
 

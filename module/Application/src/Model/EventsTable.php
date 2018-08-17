@@ -13,6 +13,8 @@
     use Doctrine\ORM\Tools\SchemaTool;
     use RuntimeException;
     use Zend\Log\Logger;
+    use function Zend\DevelopmentMode\check as isDevMode;
+
 
     class EventsTable
     {
@@ -49,9 +51,17 @@
             $classes = array(
                 $this->db->getClassMetadata(Event::class),
             );
-            $tool->dropSchema($classes);
             try {
-                $tool->createSchema($classes);
+                $tool->updateSchema($classes);
+                if (isDevMode()) {
+                    $connection = $this->db->getConnection();
+                    $platform = $connection->getDatabasePlatform();
+                    foreach ($classes as $class) {
+                        $delete_query = $platform->getTruncateTableSQL($class->getTableName());
+                        $connection->executeUpdate($delete_query);
+                    }
+                    $this->db->flush();
+                }
             }
             catch (\Throwable $e) {
                 $this->logger->emerg($e);

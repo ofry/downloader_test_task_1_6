@@ -8,6 +8,7 @@
 namespace Application;
 
 use Application\Controller\Plugin\Dates;
+use Application\Controller\Plugin\DomExtender;
 use Application\Factory\BaseFactory;
 use Application\Factory\DownloaderFactory;
 use Application\Factory\WebPageFactory;
@@ -94,9 +95,11 @@ return [
     'controller_plugins' => [
         'factories' => [
             Dates::class => InvokableFactory::class,
+            DomExtender::class => InvokableFactory::class,
         ],
         'aliases' => [
             'dates' => Dates::class,
+            'dom' => DomExtender::class,
         ],
     ],
     'view_manager' => [
@@ -113,6 +116,9 @@ return [
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
+        ],
+        'strategies'          => [
+            'ViewJsonStrategy',
         ],
     ],
     'service_manager' => [

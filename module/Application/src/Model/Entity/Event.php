@@ -10,6 +10,7 @@
 
     use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
     use Doctrine\ORM\Mapping\ClassMetadata;
+    use function Stringy\create as s;
 
     class Event
     {
@@ -42,7 +43,7 @@
          */
         public function getId()
         {
-            !empty($this->id) ? $this->id : null;
+            return !empty($this->id) ? $this->id : null;
         }
 
         /**
@@ -51,7 +52,7 @@
         public function getDate()
         {
             if ($this->date instanceof \DateTimeInterface) {
-                return $this->date->format('YYYY-MM-DD HH-II-SS');
+                return $this->date->format('Y-m-d H-i-s');
             }
 
             return $this->date;
@@ -62,11 +63,13 @@
          */
         public function setDate($date)
         {
-            if ($date === null || $date instanceof \DateTimeInterface) {
+            if ($date === null || (is_object($date) && is_callable(array($date, 'format')))) {
                 $this->date = $date;
             }
-            $tmp = \DateTime::createFromFormat('YYYY-MM-DD HH-II-SS', $date);
-            $this->date = (!$tmp) ? null : $tmp;
+            else {
+                $tmp = \DateTime::createFromFormat('Y-m-d H-i-s', $date);
+                $this->date = (!$tmp) ? null : $tmp;
+            }
         }
 
         /**
@@ -83,7 +86,9 @@
          */
         public function setTitle($title)
         {
-            $this->title = !empty(trim($title)) ? trim($title) : '';
+            $result = !empty(trim($title)) ? trim($title) : '';
+
+            $this->title = (string) s($result)->safeTruncate(120);
         }
 
         /**

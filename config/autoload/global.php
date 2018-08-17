@@ -22,11 +22,6 @@ return [
         ],
     ],
     'doctrine' => [
-        'connection'    => [
-            'orm_default' => [
-                'driverClass' => MysqliDriver::class,
-            ],
-        ],
         'configuration' => [
             'orm_default' => [
                 'driver' => 'orm_default_chain',
