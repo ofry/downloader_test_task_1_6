@@ -12,8 +12,20 @@
     use Zend\ServiceManager\Factory\FactoryInterface;
     use Interop\Container\ContainerInterface;
 
+    /**
+     * Class WebPageFactory Фабрика, описывающая веб-ресурс
+     *
+     * @package Application\Factory
+     */
     class WebPageFactory implements FactoryInterface
     {
+        /**
+         * @param \Interop\Container\ContainerInterface $container
+         * @param string                                $requestedName
+         * @param array|null                            $options
+         *
+         * @return \Application\Model\WebPage
+         */
         public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
         {
             $logger = $container->get('MyLogger');

@@ -39,7 +39,7 @@
         }
 
         /**
-         * @return mixed
+         * @return integer|null
          */
         public function getId()
         {
@@ -47,7 +47,7 @@
         }
 
         /**
-         * @return mixed
+         * @return string
          */
         public function getDate()
         {
@@ -59,7 +59,7 @@
         }
 
         /**
-         * @param mixed $date
+         * @param null|object|string $date
          */
         public function setDate($date)
         {
@@ -73,7 +73,7 @@
         }
 
         /**
-         * @return mixed
+         * @return string
          */
         public function getTitle()
         {
@@ -82,7 +82,7 @@
         }
 
         /**
-         * @param mixed $title
+         * @param string $title
          */
         public function setTitle($title)
         {
@@ -92,7 +92,7 @@
         }
 
         /**
-         * @return mixed
+         * @return string
          */
         public function getUrl()
         {
@@ -101,7 +101,7 @@
         }
 
         /**
-         * @param mixed $url
+         * @param string $url
          */
         public function setUrl($url)
         {

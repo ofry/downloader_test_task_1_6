@@ -16,6 +16,11 @@
     use function Zend\DevelopmentMode\check as isDevMode;
 
 
+    /**
+     * Class EventsTable
+     *
+     * @package Application\Model
+     */
     class EventsTable
     {
         /**
@@ -40,6 +45,9 @@
             $this->init();
         }
 
+        /**
+         * @return void
+         */
         private function init()
         {
             /** @var \Doctrine\ORM\Tools\SchemaTool $tool Объект для операций CREATE и DROP */
@@ -55,9 +63,18 @@
                 $tool->updateSchema($classes);
                 $this->db->flush();
                 if (isDevMode()) {
+                    /**
+                     * @var \Doctrine\DBAL\Connection
+                     */
                     $connection = $this->db->getConnection();
+                    /**
+                     * @var \Doctrine\DBAL\Platforms\AbstractPlatform
+                     */
                     $platform = $connection->getDatabasePlatform();
                     foreach ($classes as $class) {
+                        /**
+                         * @var string
+                         */
                         $delete_query = $platform->getTruncateTableSQL($class->getTableName());
                         $connection->executeUpdate($delete_query);
                     }
@@ -70,6 +87,10 @@
             }
         }
 
+        /**
+         * @param array $element
+         * @return void
+         */
         public function insert($element)
         {
             $entry = new Event();
@@ -85,6 +106,9 @@
             }
         }
 
+        /**
+         * @return array|object[]
+         */
         public function get()
         {
             return $this->db->getRepository(Event::class)->findAll();
